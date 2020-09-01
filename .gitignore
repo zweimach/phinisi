@@ -1,0 +1,6 @@
+coverage/
+logs/
+var/
+vendor/
+.phpunit*
+.env

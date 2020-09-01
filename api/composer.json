@@ -1,0 +1,51 @@
+{
+    "name": "phinisi/api",
+    "description": "A book management app",
+    "homepage": "http://github.com/zweimach/phinisi",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Ananda Umamil",
+            "email": "zweimach@zweimach.org",
+            "homepage": "https://zweimach.org"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*",
+        "catfan/medoo": "^1.7",
+        "monolog/monolog": "^2.1",
+        "php-di/php-di": "^6.2",
+        "robmorgan/phinx": "^0.12.4",
+        "slim/psr7": "^1.1",
+        "slim/slim": "^4.5",
+        "vlucas/phpdotenv": "^5.1"
+    },
+    "require-dev": {
+        "jangregor/phpstan-prophecy": "^0.8.0",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/extension-installer": "^1.0.4",
+        "phpstan/phpstan": "^0.12.37",
+        "phpstan/phpstan-strict-rules": "^0.12.4",
+        "phpunit/phpunit": "^9.3",
+        "symplify/easy-coding-standard": "^8.2"
+    },
+    "config": {
+        "process-timeout": 0,
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public",
+        "test": "phpunit"
+    }
+}
