@@ -10,8 +10,12 @@ final class CreateAuthorsTable extends AbstractMigration
     {
         $table = $this->table('authors');
         $table
-            ->addColumn('first_name', 'string', ['limit' => 40])
-            ->addColumn('last_name', 'string', ['limit' => 40])
+            ->addColumn('first_name', 'string', [
+                'limit' => 40,
+            ])
+            ->addColumn('last_name', 'string', [
+                'limit' => 40,
+            ])
             ->create();
     }
 }
