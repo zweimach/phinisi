@@ -52,7 +52,7 @@ class TestCase extends PHPUnitTestCase
         $middleware($app);
 
         $routes = new Routes();
-        $routes($app);
+        $routes($app, false);
 
         return $app;
     }
