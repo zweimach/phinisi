@@ -8,6 +8,8 @@ use Medoo\Medoo;
 
 class AuthorsRepository implements AuthorsService
 {
+    private const TABLE = 'authors';
+
     private const COLUMN = ['id', 'first_name', 'last_name'];
 
     private Medoo $database;
@@ -22,8 +24,8 @@ class AuthorsRepository implements AuthorsService
      */
     public function findAll(): array
     {
-        $authors = $this->database->select('authors', self::COLUMN);
-        if ($authors === false) {
+        $authors = $this->database->select(self::TABLE, self::COLUMN);
+        if ($authors === null) {
             $authors = [];
         }
 
@@ -35,8 +37,10 @@ class AuthorsRepository implements AuthorsService
      */
     public function findAuthorOfId(int $id): Author
     {
-        $author = $this->database->get('authors', self::COLUMN, ['id' => $id]);
-        if (!isset($author)) {
+        $author = $this->database->get(self::TABLE, self::COLUMN, [
+            'id' => $id,
+        ]);
+        if (! isset($author)) {
             throw new AuthorNotFoundException();
         }
 

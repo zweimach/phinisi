@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use DI\ContainerBuilder;
-use Monolog\Logger;
+use Monolog\Level;
 
 class Settings
 {
@@ -17,7 +17,7 @@ class Settings
                 'logger' => [
                     'name' => $_ENV['APP_NAME'],
                     'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
-                    'level' => Logger::DEBUG,
+                    'level' => Level::Debug,
                 ],
                 'database' => [
                     'driver' => $_ENV['DB_CONNECTION'],
@@ -30,7 +30,7 @@ class Settings
                 ],
                 'security' => [
                     'secret' => $_ENV['SECRET'],
-                    'origins' => $_ENV['ALLOWED_ORIGINS']
+                    'origins' => $_ENV['ALLOWED_ORIGINS'],
                 ],
             ],
         ]);

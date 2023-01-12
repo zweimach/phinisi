@@ -9,7 +9,7 @@ use App\Shared\DomainRecordNotFoundException;
 class BookNotFoundException extends DomainRecordNotFoundException
 {
     /**
-     * @var string
+     * @var mixed
      */
     public $message = 'The book you requested does not exist.';
 }

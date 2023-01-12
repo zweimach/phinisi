@@ -20,7 +20,7 @@ abstract class Action
     protected Response $response;
 
     /**
-     * @var array<string>
+     * @var array<mixed>
      */
     protected array $arguments;
 
@@ -30,7 +30,7 @@ abstract class Action
     }
 
     /**
-     * @param array<string> $arguments
+     * @param array<mixed> $arguments
      * @throws HttpNotFoundException
      * @throws HttpBadRequestException
      */
@@ -76,9 +76,9 @@ abstract class Action
     /**
      * @throws HttpBadRequestException
      */
-    protected function resolveArguments(string $name): string
+    protected function resolveArguments(string $name): mixed
     {
-        if (!isset($this->arguments[$name])) {
+        if (! isset($this->arguments[$name])) {
             throw new HttpBadRequestException($this->request, "Could not resolve argument `{$name}`.");
         }
 

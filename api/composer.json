@@ -11,28 +11,32 @@
         }
     ],
     "require": {
-        "php": "^7.4",
-        "ext-json": "*",
-        "catfan/medoo": "^1.7",
-        "monolog/monolog": "^2.1",
+        "php": "^8.2",
+        "ext-random": "*",
+        "catfan/medoo": "^2.1",
+        "monolog/monolog": "^3.2",
         "php-di/php-di": "^6.2",
-        "robmorgan/phinx": "^0.12.4",
+        "robmorgan/phinx": "^0.13.1",
         "slim/psr7": "^1.1",
         "slim/slim": "^4.5",
         "vlucas/phpdotenv": "^5.1"
     },
     "require-dev": {
-        "jangregor/phpstan-prophecy": "^0.8.0",
+        "jangregor/phpstan-prophecy": "^1.0",
         "phpspec/prophecy-phpunit": "^2.0",
         "phpstan/extension-installer": "^1.0.4",
-        "phpstan/phpstan": "^0.12.37",
-        "phpstan/phpstan-strict-rules": "^0.12.4",
+        "phpstan/phpstan": "^1.9",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-strict-rules": "^1.4",
         "phpunit/phpunit": "^9.3",
-        "symplify/easy-coding-standard": "^8.2"
+        "symplify/easy-coding-standard": "11.2.3.72"
     },
     "config": {
         "process-timeout": 0,
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     },
     "autoload": {
         "psr-4": {
@@ -45,6 +49,8 @@
         }
     },
     "scripts": {
+        "format": "ecs --fix --quiet",
+        "lint": "phpstan analyse --no-progress --quiet && ecs check --quiet",
         "start": "php -S localhost:8080 -t public",
         "test": "phpunit"
     }

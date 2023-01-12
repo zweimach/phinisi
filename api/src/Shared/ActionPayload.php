@@ -51,7 +51,7 @@ class ActionPayload implements JsonSerializable
     public function jsonSerialize(): array
     {
         $payload = [
-            'statusCode' => $this->statusCode
+            'statusCode' => $this->statusCode,
         ];
 
         if ($this->data !== null) {

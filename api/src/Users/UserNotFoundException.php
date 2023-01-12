@@ -9,7 +9,7 @@ use App\Shared\DomainRecordNotFoundException;
 class UserNotFoundException extends DomainRecordNotFoundException
 {
     /**
-     * @var string
+     * @var mixed
      */
     public $message = 'The user you requested does not exist.';
 }

@@ -35,15 +35,15 @@ class Dependencies
                 $config = $container->get('settings')['database'];
 
                 return new Medoo([
-                    'database_type' => $config['driver'],
-                    'database_name' => $config['database'],
-                    'server' => $config['host'],
+                    'type' => $config['driver'],
+                    'database' => $config['database'],
+                    'host' => $config['host'],
                     'port' => $config['port'],
                     'username' => $config['username'],
                     'password' => $config['password'],
                     'charset' => $config['charset'],
                 ]);
-            }
+            },
         ]);
     }
 }

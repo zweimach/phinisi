@@ -45,7 +45,7 @@ class HttpErrorHandler extends SlimErrorHandler
         }
 
         if (
-            !($exception instanceof HttpException)
+            ! ($exception instanceof HttpException)
             && $this->displayErrorDetails
         ) {
             $error->setDescription($exception->getMessage());

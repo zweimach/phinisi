@@ -23,7 +23,7 @@ class UsersRepository implements UsersService
     public function findAll(): array
     {
         $users = $this->database->select('users', self::COLUMN);
-        if ($users === false) {
+        if ($users === null) {
             $users = [];
         }
 
@@ -35,8 +35,10 @@ class UsersRepository implements UsersService
      */
     public function findUserOfId(int $id): User
     {
-        $user = $this->database->get('users', self::COLUMN, ['id' => $id]);
-        if (!isset($user)) {
+        $user = $this->database->get('users', self::COLUMN, [
+            'id' => $id,
+        ]);
+        if (! isset($user)) {
             throw new UserNotFoundException();
         }
 

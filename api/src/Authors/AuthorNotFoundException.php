@@ -9,7 +9,7 @@ use App\Shared\DomainRecordNotFoundException;
 class AuthorNotFoundException extends DomainRecordNotFoundException
 {
     /**
-     * @var string
+     * @var mixed
      */
     public $message = 'The author you requested does not exist.';
 }

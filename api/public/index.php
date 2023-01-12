@@ -49,7 +49,7 @@ $middleware($app);
 $routes = new Routes();
 $routes($app);
 
-/** @var bool */
+/** @var bool $displayErrorDetails */
 $displayErrorDetails = $container->get('settings')['displayErrorDetails'];
 
 $serverRequestCreator = ServerRequestCreatorFactory::create();

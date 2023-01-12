@@ -23,7 +23,7 @@ class BooksRepository implements BooksService
     public function findAll(): array
     {
         $books = $this->database->select('books', self::COLUMN);
-        if ($books === false) {
+        if ($books === null) {
             $books = [];
         }
 
@@ -35,8 +35,10 @@ class BooksRepository implements BooksService
      */
     public function findBookOfId(int $id): Book
     {
-        $book = $this->database->get('books', self::COLUMN, ['id' => $id]);
-        if (!isset($book)) {
+        $book = $this->database->get('books', self::COLUMN, [
+            'id' => $id,
+        ]);
+        if (! isset($book)) {
             throw new BookNotFoundException();
         }
 
