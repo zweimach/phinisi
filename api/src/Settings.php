@@ -16,7 +16,7 @@ class Settings
                 'displayErrorDetails' => $_ENV['APP_DEBUG'] === 'true',
                 'logger' => [
                     'name' => $_ENV['APP_NAME'],
-                    'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
+                    'path' => isset($_ENV['docker']) || $_ENV['APP_STDOUT'] ? 'php://stdout' : __DIR__ . '/../logs/app.log',
                     'level' => Level::Debug,
                 ],
                 'database' => [
