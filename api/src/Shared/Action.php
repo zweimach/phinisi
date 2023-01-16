@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Shared;
 
-use Exception;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Log\LoggerInterface;
@@ -54,23 +53,11 @@ abstract class Action
     abstract protected function action(): Response;
 
     /**
-     * @return mixed
-     * @throws Exception
-     * @throws HttpBadRequestException
+     * @return null|array<mixed>|object
      */
     protected function getFormData()
     {
-        $input = file_get_contents('php://input');
-        if ($input === false) {
-            throw new Exception('Failed to open php://input.');
-        }
-
-        $input = json_decode($input);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new HttpBadRequestException($this->request, 'Malformed JSON input.');
-        }
-
-        return $input;
+        return $this->request->getParsedBody();
     }
 
     /**
