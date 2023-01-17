@@ -43,12 +43,6 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
-$middleware = new Middlewares();
-$middleware($app);
-
-$routes = new Routes();
-$routes($app);
-
 /** @var bool $displayErrorDetails */
 $displayErrorDetails = $container->get('settings')['displayErrorDetails'];
 
@@ -63,6 +57,12 @@ register_shutdown_function($shutdownHandler);
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
+
+$middleware = new Middlewares();
+$middleware($app);
+
+$routes = new Routes();
+$routes($app);
 
 $errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, false, false);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
