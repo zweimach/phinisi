@@ -24,7 +24,7 @@ if (file_exists(__DIR__ . '/../.env')) {
 
 $containerBuilder = new ContainerBuilder();
 
-if ($_ENV['APP_DEBUG'] !== 'true') {
+if (isset($_ENV['APP_DEBUG']) && $_ENV['APP_DEBUG'] !== 'true') {
     $containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
 }
 

@@ -14,12 +14,19 @@ abstract class Action
 {
     protected LoggerInterface $logger;
 
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     protected Request $request;
 
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
     protected Response $response;
 
     /**
      * @var array<mixed>
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     protected array $arguments;
 

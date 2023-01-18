@@ -22,6 +22,8 @@ class ActionTest extends TestCase
             $logger = $container->get(LoggerInterface::class);
         }
 
+        static::assertNotNull($logger);
+
         $testAction = new class($logger) extends Action {
             public function __construct(LoggerInterface $loggerInterface)
             {
@@ -56,6 +58,8 @@ class ActionTest extends TestCase
         if ($container !== null) {
             $logger = $container->get(LoggerInterface::class);
         }
+
+        static::assertNotNull($logger);
 
         $testAction = new class($logger) extends Action {
             public function __construct(LoggerInterface $loggerInterface)

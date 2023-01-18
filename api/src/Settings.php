@@ -13,7 +13,7 @@ class Settings
     {
         $containerBuilder->addDefinitions([
             'settings' => [
-                'displayErrorDetails' => $_ENV['APP_DEBUG'] === 'true',
+                'displayErrorDetails' => isset($_ENV['APP_DEBUG']) && $_ENV['APP_DEBUG'] !== 'true',
                 'logger' => [
                     'name' => $_ENV['APP_NAME'],
                     'path' => isset($_ENV['docker']) || $_ENV['APP_STDOUT'] ? 'php://stdout' : __DIR__ . '/../logs/app.log',

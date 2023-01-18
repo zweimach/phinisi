@@ -30,7 +30,8 @@
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-strict-rules": "^1.4",
         "phpunit/phpunit": "^9.3",
-        "symplify/easy-coding-standard": "11.2.3.72"
+        "symplify/easy-coding-standard": "11.2.3.72",
+        "vimeo/psalm": "^5.4"
     },
     "config": {
         "process-timeout": 0,
@@ -52,6 +53,7 @@
     "scripts": {
         "format": "ecs --fix --quiet",
         "lint": "phpstan analyse --no-progress --quiet && ecs check --quiet",
+        "check": "psalm --no-progress --output-format=compact",
         "start": "php -S localhost:8080 -t public",
         "test": "phpunit"
     }
