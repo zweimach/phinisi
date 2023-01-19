@@ -16,7 +16,7 @@
         "catfan/medoo": "^2.1",
         "middlewares/trailing-slash": "^2.0",
         "monolog/monolog": "^3.2",
-        "php-di/php-di": "^6.2",
+        "php-di/php-di": "^7.0",
         "robmorgan/phinx": "^0.13.1",
         "slim/psr7": "^1.1",
         "slim/slim": "^4.5",

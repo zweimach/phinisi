@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use DI\Container;
 use DI\ContainerBuilder;
 use Medoo\Medoo;
 use Monolog\Handler\StreamHandler;
@@ -14,6 +15,10 @@ use Psr\Log\LoggerInterface;
 
 class Dependencies
 {
+    /**
+     * @param ContainerBuilder<Container> $containerBuilder
+     * @throws \LogicException
+     */
     public function __invoke(ContainerBuilder $containerBuilder): void
     {
         $containerBuilder->addDefinitions([
