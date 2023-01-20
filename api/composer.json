@@ -24,12 +24,12 @@
     },
     "require-dev": {
         "jangregor/phpstan-prophecy": "^1.0",
-        "phpspec/prophecy-phpunit": "^2.0",
+        "phpspec/prophecy": "^1.16",
         "phpstan/extension-installer": "^1.0.4",
         "phpstan/phpstan": "^1.9",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-strict-rules": "^1.4",
-        "phpunit/phpunit": "^9.3",
+        "phpunit/phpunit": "^9.5",
         "symplify/easy-coding-standard": "11.2.3.72",
         "vimeo/psalm": "^5.4"
     },

@@ -11,14 +11,11 @@ use App\Users\User;
 use App\Users\UserNotFoundException;
 use App\Users\UsersService;
 use DI\Container;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Slim\Middleware\ErrorMiddleware;
 use Tests\TestCase;
 
 class ViewUserActionTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testAction(): void
     {
         $app = $this->getAppInstance();
@@ -28,7 +25,8 @@ class ViewUserActionTest extends TestCase
 
         $user = new User(1, 'bill.gates', 'bill@gates.com', 'billgates', 'Bill', 'Gates');
 
-        $usersServiceProphecy = $this->prophesize(UsersService::class);
+        $usersServiceProphecy = $this->prophet->prophesize(UsersService::class);
+        /** @psalm-suppress TooManyArguments */
         $usersServiceProphecy
             ->findUserOfId(1)
             ->willReturn($user)
@@ -43,7 +41,7 @@ class ViewUserActionTest extends TestCase
         $expectedPayload = new ActionPayload(200, $user);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
-        static::assertEquals($serializedPayload, $payload);
+        static::assertSame($serializedPayload, $payload);
     }
 
     public function testActionThrowsUserNotFoundException(): void
@@ -62,7 +60,7 @@ class ViewUserActionTest extends TestCase
         /** @var Container $container */
         $container = $app->getContainer();
 
-        $usersServiceProphecy = $this->prophesize(UsersService::class);
+        $usersServiceProphecy = $this->prophet->prophesize(UsersService::class);
         $usersServiceProphecy
             ->findUserOfId(1)
             ->willThrow(new UserNotFoundException())
@@ -78,6 +76,6 @@ class ViewUserActionTest extends TestCase
         $expectedPayload = new ActionPayload(404, null, $expectedError);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
-        static::assertEquals($serializedPayload, $payload);
+        static::assertSame($serializedPayload, $payload);
     }
 }

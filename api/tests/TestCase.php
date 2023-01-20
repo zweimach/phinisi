@@ -12,6 +12,7 @@ use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 use Exception;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use Prophecy\Prophet;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Factory\AppFactory;
@@ -22,6 +23,21 @@ use Slim\Psr7\Uri;
 
 class TestCase extends PHPUnitTestCase
 {
+    /**
+     * @psalm-suppress PropertyNotSetInConstructor
+     */
+    protected Prophet $prophet;
+
+    protected function setUp(): void
+    {
+        $this->prophet = new Prophet();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->prophet->checkPredictions();
+    }
+
     /**
      * @throws Exception
      */
@@ -66,7 +82,9 @@ class TestCase extends PHPUnitTestCase
     protected function createRequest(
         string $method,
         string $path,
-        array $headers = ['HTTP_ACCEPT' => 'application/json'],
+        array $headers = [
+            'HTTP_ACCEPT' => 'application/json',
+        ],
         array $cookies = [],
         array $serverParams = []
     ): Request {

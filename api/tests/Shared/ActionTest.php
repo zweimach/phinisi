@@ -36,7 +36,7 @@ class ActionTest extends TestCase
                     new ActionPayload(
                         202,
                         [
-                            'willBeDoneAt' => (new DateTimeImmutable())->format(DateTimeImmutable::ATOM)
+                            'willBeDoneAt' => (new DateTimeImmutable())->format(DateTimeImmutable::ATOM),
                         ]
                     )
                 );
@@ -47,7 +47,7 @@ class ActionTest extends TestCase
         $request = $this->createRequest('GET', '/test-action-response-code');
         $response = $app->handle($request);
 
-        static::assertEquals(202, $response->getStatusCode());
+        static::assertSame(202, $response->getStatusCode());
     }
 
     public function testActionSetsHttpCodeRespondData(): void
@@ -71,7 +71,7 @@ class ActionTest extends TestCase
             {
                 return $this->respondWithData(
                     [
-                        'willBeDoneAt' => (new DateTimeImmutable())->format(DateTimeImmutable::ATOM)
+                        'willBeDoneAt' => (new DateTimeImmutable())->format(DateTimeImmutable::ATOM),
                     ],
                     202
                 );
@@ -82,6 +82,6 @@ class ActionTest extends TestCase
         $request = $this->createRequest('GET', '/test-action-response-code');
         $response = $app->handle($request);
 
-        static::assertEquals(202, $response->getStatusCode());
+        static::assertSame(202, $response->getStatusCode());
     }
 }

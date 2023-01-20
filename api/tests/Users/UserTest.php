@@ -36,12 +36,12 @@ class UserTest extends TestCase
     ): void {
         $user = new User($id, $username, $email, $password, $firstName, $lastName);
 
-        static::assertEquals($id, $user->id());
-        static::assertEquals($username, $user->username());
-        static::assertEquals($email, $user->email());
-        static::assertEquals($password, $user->password());
-        static::assertEquals($firstName, $user->firstName());
-        static::assertEquals($lastName, $user->lastName());
+        static::assertSame($id, $user->id());
+        static::assertSame($username, $user->username());
+        static::assertSame($email, $user->email());
+        static::assertSame($password, $user->password());
+        static::assertSame($firstName, $user->firstName());
+        static::assertSame($lastName, $user->lastName());
     }
 
     /**
@@ -66,6 +66,6 @@ class UserTest extends TestCase
             'lastName' => $lastName,
         ]);
 
-        static::assertEquals($expectedPayload, json_encode($user));
+        static::assertSame($expectedPayload, json_encode($user));
     }
 }

@@ -14,9 +14,11 @@ class InMemoryUserRepositoryTest extends TestCase
     {
         $user = new User(1, 'bill.gates', 'bill@gates.com', 'billgates', 'Bill', 'Gates');
 
-        $userRepository = new InMemoryUserRepository([1 => $user]);
+        $userRepository = new InMemoryUserRepository([
+            1 => $user,
+        ]);
 
-        static::assertEquals([$user], $userRepository->findAll());
+        static::assertSame([$user], $userRepository->findAll());
     }
 
     public function testFindAllUsersByDefault(): void
@@ -31,16 +33,18 @@ class InMemoryUserRepositoryTest extends TestCase
 
         $userRepository = new InMemoryUserRepository();
 
-        static::assertEquals(array_values($users), $userRepository->findAll());
+        static::assertEquals($users, $userRepository->findAll());
     }
 
     public function testFindUserOfId(): void
     {
         $user = new User(1, 'bill.gates', 'bill@gates.com', 'billgates', 'Bill', 'Gates');
 
-        $userRepository = new InMemoryUserRepository([1 => $user]);
+        $userRepository = new InMemoryUserRepository([
+            1 => $user,
+        ]);
 
-        static::assertEquals($user, $userRepository->findUserOfId(1));
+        static::assertSame($user, $userRepository->findUserOfId(1));
     }
 
     public function testFindUserOfIdThrowsNotFoundException(): void

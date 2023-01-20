@@ -8,13 +8,10 @@ use App\Shared\ActionPayload;
 use App\Users\User;
 use App\Users\UsersService;
 use DI\Container;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Tests\TestCase;
 
 class ListUserActionTest extends TestCase
 {
-    use ProphecyTrait;
-
     public function testAction(): void
     {
         $app = $this->getAppInstance();
@@ -24,7 +21,8 @@ class ListUserActionTest extends TestCase
 
         $user = new User(1, 'bill.gates', 'bill@gates.com', 'billgates', 'Bill', 'Gates');
 
-        $usersServiceProphecy = $this->prophesize(UsersService::class);
+        $usersServiceProphecy = $this->prophet->prophesize(UsersService::class);
+        /** @psalm-suppress TooManyArguments */
         $usersServiceProphecy
             ->findAll()
             ->willReturn([$user])
@@ -39,6 +37,6 @@ class ListUserActionTest extends TestCase
         $expectedPayload = new ActionPayload(200, [$user]);
         $serializedPayload = json_encode($expectedPayload, JSON_PRETTY_PRINT);
 
-        static::assertEquals($serializedPayload, $payload);
+        static::assertSame($serializedPayload, $payload);
     }
 }
