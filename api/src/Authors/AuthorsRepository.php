@@ -46,4 +46,13 @@ class AuthorsRepository implements AuthorsService
 
         return Author::of($author);
     }
+
+    public function createAuthor(string $firstName, string $lastName): int
+    {
+        $this->database->insert(self::TABLE, [
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+        ]);
+        return (int) $this->database->id();
+    }
 }

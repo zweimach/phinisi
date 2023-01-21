@@ -15,4 +15,6 @@ interface AuthorsService
      * @throws AuthorNotFoundException
      */
     public function findAuthorOfId(int $id): Author;
+
+    public function createAuthor(string $firstName, string $lastName): int;
 }

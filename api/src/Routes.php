@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Authors\CreateAuthorAction;
 use App\Authors\ListAuthorsAction;
 use App\Authors\ViewAuthorAction;
 use App\Books\ListBooksAction;
@@ -38,6 +39,7 @@ class Routes
         $app->group('/authors', function (Group $group): void {
             $group->get('', ListAuthorsAction::class);
             $group->get('/{id}', ViewAuthorAction::class);
+            $group->post('', CreateAuthorAction::class);
         });
 
         if (! $enableCatchAll) {
