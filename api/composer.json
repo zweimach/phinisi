@@ -12,7 +12,6 @@
     ],
     "require": {
         "php": "^8.2",
-        "ext-random": "*",
         "catfan/medoo": "^2.1",
         "middlewares/trailing-slash": "^2.0",
         "monolog/monolog": "^3.2",
