@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace App\Books;
 
-use Medoo\Medoo;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class BooksRepository implements BooksService
 {
-    private const COLUMN = ['id', 'title', 'description', 'publication_date', 'author_id'];
+    private EntityManager $em;
 
-    private Medoo $database;
+    /**
+     * @var EntityRepository<Book>
+     */
+    private EntityRepository $database;
 
-    public function __construct(Medoo $database)
+    public function __construct(EntityManager $em)
     {
-        $this->database = $database;
+        $this->em = $em;
+        $this->database = $em->getRepository(Book::class);
     }
 
     /**
@@ -22,12 +27,9 @@ class BooksRepository implements BooksService
      */
     public function findAll(): array
     {
-        $books = $this->database->select('books', self::COLUMN);
-        if ($books === null) {
-            $books = [];
-        }
+        $books = $this->database->findBy([], null, 10);
 
-        return array_map(fn ($book) => Book::of($book), $books);
+        return $books;
     }
 
     /**
@@ -35,13 +37,11 @@ class BooksRepository implements BooksService
      */
     public function findBookOfId(int $id): Book
     {
-        $book = $this->database->get('books', self::COLUMN, [
-            'id' => $id,
-        ]);
-        if (! isset($book)) {
+        $book = $this->database->find($id);
+        if ($book === null) {
             throw new BookNotFoundException();
         }
 
-        return Book::of($book);
+        return $book;
     }
 }

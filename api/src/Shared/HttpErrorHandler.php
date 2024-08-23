@@ -14,6 +14,9 @@ use Slim\Exception\HttpNotImplementedException;
 use Slim\Exception\HttpUnauthorizedException;
 use Slim\Handlers\ErrorHandler as SlimErrorHandler;
 
+/**
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 class HttpErrorHandler extends SlimErrorHandler
 {
     protected function respond(): Response

@@ -4,22 +4,28 @@ declare(strict_types=1);
 
 namespace App\Authors;
 
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
 use JsonSerializable;
 
+#[Entity, Table(name: 'authors')]
 class Author implements JsonSerializable
 {
+    #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
+    #[Column(name: 'first_name', type: 'string', nullable: false)]
     private string $firstName;
 
+    #[Column(name: 'last_name', type: 'string', nullable: false)]
     private string $lastName;
 
-    /**
-     * @param int|string $id
-     */
-    public function __construct($id, string $firstName, string $lastName)
+    public function __construct(int $id, string $firstName, string $lastName)
     {
-        $this->id = (int) $id;
+        $this->id = $id;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
     }
@@ -49,17 +55,5 @@ class Author implements JsonSerializable
             'firstName' => $this->firstName,
             'lastName' => $this->lastName,
         ];
-    }
-
-    /**
-     * @param array<string> $author
-     */
-    public static function of(array $author): self
-    {
-        $id = $author['id'];
-        $firstName = $author['first_name'];
-        $lastName = $author['last_name'];
-
-        return new self($id, $firstName, $lastName);
     }
 }

@@ -17,12 +17,10 @@ class ActionTest extends TestCase
     {
         $app = $this->getAppInstance();
         $container = $app->getContainer();
-        $logger = null;
-        if ($container !== null) {
-            $logger = $container->get(LoggerInterface::class);
-        }
 
-        static::assertNotNull($logger);
+        static::assertNotNull($container);
+
+        $logger = $container->get(LoggerInterface::class);
 
         $testAction = new class($logger) extends Action {
             public function __construct(LoggerInterface $loggerInterface)

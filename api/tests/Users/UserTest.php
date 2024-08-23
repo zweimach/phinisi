@@ -12,7 +12,7 @@ class UserTest extends TestCase
     /**
      * @return array<mixed>
      */
-    public function userProvider(): array
+    public static function userProvider(): array
     {
         return [
             [1, 'bill.gates', 'bill@gates.com', 'billgates', 'Bill', 'Gates'],

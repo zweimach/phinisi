@@ -48,4 +48,12 @@ class InMemoryUserRepository implements UsersService
 
         return $this->users[$id];
     }
+
+    public function createUser(string $username, string $email, string $password, string $firstName, string $lastName): int
+    {
+        $id = count($this->users) + 1;
+        $this->users[] = new User($id, $username, $email, $password, $firstName, $lastName);
+
+        return $id;
+    }
 }

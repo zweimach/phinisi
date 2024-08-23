@@ -22,7 +22,6 @@ class ListUserActionTest extends TestCase
         $user = new User(1, 'bill.gates', 'bill@gates.com', 'billgates', 'Bill', 'Gates');
 
         $usersServiceProphecy = $this->prophet->prophesize(UsersService::class);
-        /** @psalm-suppress TooManyArguments */
         $usersServiceProphecy
             ->findAll()
             ->willReturn([$user])

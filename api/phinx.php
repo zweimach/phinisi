@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use App\Settings;
-use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 
 require __DIR__ . '/vendor/autoload.php';
@@ -13,13 +12,8 @@ if (file_exists(__DIR__ . '/.env')) {
     $dotenv->load();
 }
 
-$containerBuilder = new ContainerBuilder();
-
 $settings = new Settings();
-$settings($containerBuilder);
-
-$container = $containerBuilder->build();
-$config = $container->get('settings')['database'];
+$config = $settings->database;
 
 return [
     'paths' => [
@@ -32,8 +26,8 @@ return [
         'production' => [
             'adapter' => $config['driver'],
             'host' => $config['host'],
-            'name' => $config['database'],
-            'user' => $config['username'],
+            'name' => $config['dbname'],
+            'user' => $config['user'],
             'pass' => $config['password'],
             'port' => $config['port'],
             'charset' => $config['charset'],

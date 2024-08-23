@@ -4,30 +4,32 @@ declare(strict_types=1);
 
 namespace App\Users;
 
-use Medoo\Medoo;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class UsersRepository implements UsersService
 {
-    private const COLUMN = ['id', 'username', 'email', 'password', 'first_name', 'last_name'];
+    private EntityManager $em;
 
-    private Medoo $database;
+    /**
+     * @var EntityRepository<User>
+     */
+    private EntityRepository $database;
 
-    public function __construct(Medoo $database)
+    public function __construct(EntityManager $em)
     {
-        $this->database = $database;
+        $this->em = $em;
+        $this->database = $em->getRepository(User::class);
     }
 
     /**
-     * @return array<User>
+     * @return list<User>
      */
     public function findAll(): array
     {
-        $users = $this->database->select('users', self::COLUMN);
-        if ($users === null) {
-            $users = [];
-        }
+        $users = $this->database->findBy([], null, 10);
 
-        return array_map(fn ($user) => User::of($user), $users);
+        return $users;
     }
 
     /**
@@ -35,13 +37,26 @@ class UsersRepository implements UsersService
      */
     public function findUserOfId(int $id): User
     {
-        $user = $this->database->get('users', self::COLUMN, [
-            'id' => $id,
-        ]);
-        if (! isset($user)) {
+        $user = $this->database->find($id);
+        if ($user === null) {
             throw new UserNotFoundException();
         }
 
-        return User::of($user);
+        return $user;
+    }
+
+    public function createUser(string $username, string $email, string $password, string $firstName = '', string $lastName = ''): int
+    {
+        $user = new User(
+            id: 0,
+            username: $username,
+            email: $email,
+            password: $password,
+            firstName: $firstName,
+            lastName: $lastName,
+        );
+        $this->em->persist($user);
+        $this->em->flush();
+        return $user->id();
     }
 }

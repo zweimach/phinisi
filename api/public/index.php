@@ -6,7 +6,6 @@ use App\Dependencies;
 use App\Middlewares;
 use App\Repositories;
 use App\Routes;
-use App\Settings;
 use App\Shared\HttpErrorHandler;
 use App\Shared\ResponseEmitter;
 use App\Shared\ShutdownHandler;
@@ -28,9 +27,6 @@ if (isset($_ENV['APP_DEBUG']) && $_ENV['APP_DEBUG'] !== 'true') {
     $containerBuilder->enableCompilation(__DIR__ . '/../var/cache');
 }
 
-$settings = new Settings();
-$settings($containerBuilder);
-
 $dependencies = new Dependencies();
 $dependencies($containerBuilder);
 
@@ -43,8 +39,7 @@ AppFactory::setContainer($container);
 $app = AppFactory::create();
 $callableResolver = $app->getCallableResolver();
 
-/** @var bool $displayErrorDetails */
-$displayErrorDetails = $container->get('settings')['displayErrorDetails'];
+$displayErrorDetails = false;
 
 $serverRequestCreator = ServerRequestCreatorFactory::create();
 $request = $serverRequestCreator->createServerRequestFromGlobals();
@@ -64,7 +59,7 @@ $middleware($app);
 $routes = new Routes();
 $routes($app);
 
-$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, false, false);
+$errorMiddleware = $app->addErrorMiddleware($displayErrorDetails, true, true);
 $errorMiddleware->setDefaultErrorHandler($errorHandler);
 
 $response = $app->handle($request);

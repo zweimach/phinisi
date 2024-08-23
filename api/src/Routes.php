@@ -11,6 +11,7 @@ use App\Books\ListBooksAction;
 use App\Books\ViewBookAction;
 use App\Users\ListUsersAction;
 use App\Users\ViewUserAction;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -19,6 +20,9 @@ use Slim\Interfaces\RouteCollectorProxyInterface as Group;
 
 class Routes
 {
+    /**
+     * @param App<ContainerInterface|null> $app
+     */
     public function __invoke(App $app, bool $enableCatchAll = true): void
     {
         $app->options('/{routes:.*}', function (Request $request, Response $response): Response {
@@ -46,7 +50,7 @@ class Routes
             return;
         }
 
-        $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request, Response $response) {
+        $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function (Request $request) {
             throw new HttpNotFoundException($request);
         });
     }

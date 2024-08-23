@@ -12,7 +12,6 @@ use App\Users\UsersRepository;
 use App\Users\UsersService;
 use DI\Container;
 use DI\ContainerBuilder;
-
 use function DI\autowire;
 
 class Repositories

@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace App\Authors;
 
-use Medoo\Medoo;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityRepository;
 
 class AuthorsRepository implements AuthorsService
 {
-    private const TABLE = 'authors';
+    private EntityManager $em;
 
-    private const COLUMN = ['id', 'first_name', 'last_name'];
+    /**
+     * @var EntityRepository<Author>
+     */
+    private EntityRepository $database;
 
-    private Medoo $database;
-
-    public function __construct(Medoo $database)
+    public function __construct(EntityManager $em)
     {
-        $this->database = $database;
+        $this->em = $em;
+        $this->database = $em->getRepository(Author::class);
     }
 
     /**
@@ -24,12 +27,9 @@ class AuthorsRepository implements AuthorsService
      */
     public function findAll(): array
     {
-        $authors = $this->database->select(self::TABLE, self::COLUMN);
-        if ($authors === null) {
-            $authors = [];
-        }
+        $authors = $this->database->findBy([], null, 10);
 
-        return array_map(fn ($author) => Author::of($author), $authors);
+        return $authors;
     }
 
     /**
@@ -37,22 +37,23 @@ class AuthorsRepository implements AuthorsService
      */
     public function findAuthorOfId(int $id): Author
     {
-        $author = $this->database->get(self::TABLE, self::COLUMN, [
-            'id' => $id,
-        ]);
-        if (! isset($author)) {
+        $author = $this->database->find($id);
+        if ($author === null) {
             throw new AuthorNotFoundException();
         }
 
-        return Author::of($author);
+        return $author;
     }
 
     public function createAuthor(string $firstName, string $lastName): int
     {
-        $this->database->insert(self::TABLE, [
-            'first_name' => $firstName,
-            'last_name' => $lastName,
-        ]);
-        return (int) $this->database->id();
+        $author = new Author(
+            id: 0,
+            firstName: $firstName,
+            lastName: $lastName,
+        );
+        $this->em->persist($author);
+        $this->em->flush();
+        return $author->id();
     }
 }

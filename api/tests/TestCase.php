@@ -7,12 +7,12 @@ namespace Tests;
 use App\Dependencies;
 use App\Middlewares;
 use App\Routes;
-use App\Settings;
 use DI\ContainerBuilder;
 use Dotenv\Dotenv;
 use Exception;
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Prophecy\Prophet;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 use Slim\Factory\AppFactory;
@@ -40,6 +40,7 @@ class TestCase extends PHPUnitTestCase
 
     /**
      * @throws Exception
+     * @return App<ContainerInterface|null>
      */
     protected function getAppInstance(): App
     {
@@ -50,8 +51,6 @@ class TestCase extends PHPUnitTestCase
 
         $containerBuilder = new ContainerBuilder();
 
-        $settings = new Settings();
-        $settings($containerBuilder);
 
         $dependencies = new Dependencies();
         $dependencies($containerBuilder);

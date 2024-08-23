@@ -4,35 +4,48 @@ declare(strict_types=1);
 
 namespace App\Books;
 
+use App\Authors\Author;
+use DateTimeImmutable;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\Table;
 use JsonSerializable;
 
+#[Entity, Table(name: 'books')]
 class Book implements JsonSerializable
 {
+    #[Id, Column(type: 'integer'), GeneratedValue(strategy: 'AUTO')]
     private int $id;
 
+    #[Column(type: 'string', nullable: false)]
     private string $title;
 
+    #[Column(type: 'text', nullable: false)]
     private string $description;
 
-    private string $publicationDate;
+    #[Column(name: 'publication_date', type: 'date_immutable', nullable: false)]
+    private DateTimeImmutable $publicationDate;
 
-    private string $authorId;
+    #[ManyToOne(targetEntity: Author::class)]
+    #[JoinColumn(name: 'author_id', referencedColumnName: 'id')]
+    private ?Author $author = null;
 
-    /**
-     * @param int|string $id
-     */
     public function __construct(
-        $id,
+        int $id,
         string $title,
         string $description,
-        string $publicationDate,
-        string $authorId
+        DateTimeImmutable $publicationDate,
+        ?Author $author,
     ) {
-        $this->id = (int) $id;
+        $this->id = $id;
         $this->title = $title;
         $this->description = $description;
         $this->publicationDate = $publicationDate;
-        $this->authorId = $authorId;
+        $this->author = $author;
     }
 
     public function id(): int
@@ -50,14 +63,14 @@ class Book implements JsonSerializable
         return $this->description;
     }
 
-    public function publicationDate(): string
+    public function publicationDate(): DateTimeImmutable
     {
         return $this->publicationDate;
     }
 
-    public function authorId(): string
+    public function author(): ?Author
     {
-        return $this->authorId;
+        return $this->author;
     }
 
     /**
@@ -70,21 +83,7 @@ class Book implements JsonSerializable
             'title' => $this->title,
             'description' => $this->description,
             'publicationDate' => $this->publicationDate,
-            'authorId' => $this->authorId,
+            'authorId' => $this->author?->id(),
         ];
-    }
-
-    /**
-     * @param array<string> $book
-     */
-    public static function of(array $book): self
-    {
-        $id = $book['id'];
-        $title = $book['title'];
-        $description = $book['description'];
-        $publicationDate = $book['publication_date'];
-        $authorId = $book['author_id'];
-
-        return new self($id, $title, $description, $publicationDate, $authorId);
     }
 }

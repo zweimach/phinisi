@@ -1,10 +1,14 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <psalm
-  errorLevel="3"
-  resolveFromConfigFile="true"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="https://getpsalm.org/schema/config"
   xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+  errorLevel="2"
+  findUnusedBaselineEntry="true"
+  findUnusedCode="true"
+  findUnusedPsalmSuppress="true"
+  findUnusedVariablesAndParams="true"
+  resolveFromConfigFile="true"
 >
   <projectFiles>
     <directory name="public" />
@@ -14,4 +18,8 @@
       <directory name="vendor" />
     </ignoreFiles>
   </projectFiles>
-</psalm>
+  <plugins>
+    <pluginClass class="Lctrs\PsalmPsrContainerPlugin\Plugin" />
+    <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
+    </plugins>
+  </psalm>
